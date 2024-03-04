@@ -4,6 +4,8 @@
 #include <fstream>
 #include <regex>
 #include <tuple>
+#include <climits>
+#include <omp.h>
 
 using namespace std;
 
@@ -86,19 +88,19 @@ int main(int agrc, char** argv) {
         currLine++;
     }
 
-    // Implementing logic
+    // Implementing logic, using brute force and omp
+    int currCounter = 0;
     long lowestLocation = LONG_MAX;
-    for (auto seed : seeds) {
-        long seedToSoilMap = getRelation(seedToSoil, seed);
+    #pragma omp parallel for reduction(min:lowestLocation)
+    for (int i = 0; i < seeds.size(); i++) {
+        long seedToSoilMap = getRelation(seedToSoil, seeds[i]);
         long soilToFertilizerMap = getRelation(soilToFertilizer, seedToSoilMap);
         long fertilizerToWaterMap = getRelation(fertilizerToWater, soilToFertilizerMap);
         long waterToLightMap = getRelation(waterToLight, fertilizerToWaterMap);
         long lightToTemperatureMap = getRelation(lightToTemperature, waterToLightMap);
         long temperatureToHumidityMap = getRelation(temperatureToHumidity, lightToTemperatureMap);
         long humidityToLocationMap = getRelation(humidityToLocation, temperatureToHumidityMap);
-        // cout << "Seed " << seed << " location " << humidityToLocationMap << '\n';
         lowestLocation = min(lowestLocation, humidityToLocationMap);
     }
     cout << lowestLocation ;
-    // for (auto i : seedToSoil) cout << i[0] ;
 }
