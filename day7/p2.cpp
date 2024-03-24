@@ -31,25 +31,25 @@ int getHandType(const string& hand) {
     int countJoker = 0;
     // Counting hand without joker
     for (auto i : hand) {
-        if (i != 'J'){
+        if (i != 'J') {
             if (handType.contains(i)) handType[i]++;
             else handType.insert(make_pair(i, 1));
         }
         else countJoker++;
     }
     // Checking best scenario when there's a joker
-    if (countJoker > 0){
+    if (countJoker > 0) {
         if (countJoker == 5 || countJoker == 4) return 7;
         if (countJoker == 3) {
             if (handType.size() == 2) return 6;
             if (handType.size() == 1) return 7;
         }
-        if (countJoker == 2){
+        if (countJoker == 2) {
             if (handType.size() == 3) return 4;
             if (handType.size() == 2) return 6;
             if (handType.size() == 1) return 7;
         }
-        if (countJoker == 1){
+        if (countJoker == 1) {
             if (handType.size() == 4) return 2;
             if (handType.size() == 3) return 4;
             if (handType.size() == 2) {
@@ -109,8 +109,7 @@ int main(int agrc, char** argv) {
             return false;
         });
     for (int i = 0; i < input.size(); i++) {
-        totalWinnings += (i+1)*input[i].second;
+        totalWinnings += (i + 1) * input[i].second;
     }
-    cout << totalWinnings ;
-
+    cout << totalWinnings;
 }

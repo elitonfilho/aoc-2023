@@ -76,10 +76,7 @@ int main(int agrc, char** argv) {
             return false;
         });
     for (int i = 0; i < input.size(); i++) {
-        totalWinnings += (i+1)*input[i].second;
+        totalWinnings += (i + 1) * input[i].second;
     }
-    cout << totalWinnings ;
-
+    cout << totalWinnings;
 }
-// 3A337
-// 253188585
